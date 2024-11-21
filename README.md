@@ -56,7 +56,7 @@ Antes de iniciar o projeto, instale as seguintes ferramentas:
 - **API Base:** http://127.0.0.1:8000
 - **Documentação Swagger:** http://127.0.0.1:8000/docs
 
-## Estrutura do Projeto
+<!--## Estrutura do Projeto
 
 ```bash
 tech_challenge_api/
@@ -66,7 +66,7 @@ tech_challenge_api/
 ├── venv/                   # Ambiente virtual
 ├── README.md               # Documentação do projeto
 ├── requirements.txt        # Dependências do projeto
-```
+``` -->
 
 
 # Endpoints Disponíveis
