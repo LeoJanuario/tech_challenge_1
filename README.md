@@ -32,7 +32,6 @@ Antes de iniciar o projeto, instale as seguintes ferramentas:
     ```bash
     git clone (url Projeto)
     cd tech-challenge-api
-    python -m venv venv
     ```
 
 2. **Crie e ative o ambiente virtual:**
