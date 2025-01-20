@@ -1,0 +1,51 @@
+@startuml
+skinparam packageStyle rectangle
+
+package "VitiBrasil System" {
+    
+    package "Frontend App" {
+        class App {
+            +getProducao(ano: int)
+            +getComercializacao(ano: int)
+            +getProcessamento(ano: int)
+            +getImportacao(ano: int)
+            +getExportacao(ano: int)
+        }
+    }
+
+    package "API" {
+        class Api {
+            +getProducao(ano: int): JSON
+            +getComercializacao(ano: int): JSON
+            +getProcessamento(ano: int): JSON
+            +getImportacao(ano: int): JSON
+            +getExportacao(ano: int): JSON
+        }
+        class WebScraper {
+            -fetchData(url: str): HTML
+            -parseTable(html: HTML): JSON
+            +getData(url: str, backupFile: str): JSON
+        }
+        Api --> WebScraper : "Usa para consultar o site"
+    }
+
+    package "VitiBrasil Site" {
+        class VitiBrasil {
+            +Tabelas: HTML
+        }
+    }
+
+    package "Backup" {
+        class CSVBackup {
+            +readCSV(filePath: str): JSON
+        }
+    }
+
+    App --> Api : "Consulta"
+    Api --> VitiBrasil : "Acessa"
+    WebScraper --> CSVBackup : "Fallback para CSV somente se o site estiver fora do ar"
+
+    note right of WebScraper : Quando o site não está acessível,\ntentará acessar o CSV de backup.
+}
+
+@enduml

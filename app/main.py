@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -8,11 +8,14 @@ load_dotenv()
 
 app = FastAPI()
 
-### Rota para retornar dados da aba de produção no siti VitiBrasil
+### Rota para retornar dados da aba de produção no site VitiBrasil
 @app.get("/producao")
-def get_producao():
+def get_producao(ano: int = Query(2023, description="Ano para filtrar os dados")):
 
-    url = os.getenv("url_producao")
+    base_url = os.getenv("url_base") 
+    opcao = "opt_02"
+
+    url = f"{base_url}?&ano={ano}&opcao={opcao}"
     response = requests.get(url)
 
     if response.status_code != 200:
@@ -33,13 +36,17 @@ def get_producao():
             data.append(cols)
 
     return {
+        "ano": ano,
         "headers": headers,
         "data": data
     }
 
 @app.get("/comercializacao")
-def get_comercializacao():
-    url = os.getenv("url_comercializacao")
+def get_comercializacao(ano: int = Query(2023, description="Ano para filtrar os dados")):
+    
+    base_url = os.getenv("url_base") 
+    opcao = "opt_04"
+    url = f"{base_url}?&ano={ano}&opcao={opcao}"
     response = requests.get(url)
 
     if response.status_code != 200:
@@ -60,13 +67,15 @@ def get_comercializacao():
             data.append(cols)
 
     return {
+        "ano": ano,
         "headers": headers,
         "data": data
     }
 
 @app.get("/processamento")
-def get_processamento():
-    base_url = "http://vitibrasil.cnpuv.embrapa.br/index.php"
+def get_processamento(ano: int = Query(2023, description="Ano para filtrar os dados")):
+   
+    base_url = os.getenv("url_base")
     subopcoes = [f"subopt_0{i}" for i in range(1, 5)]  # subopt_01 a subopt_04
     opcao = "opt_03"
 
@@ -74,7 +83,7 @@ def get_processamento():
 
     for subopcao in subopcoes:
         # Construir a URL dinâmica
-        url = f"{base_url}?subopcao={subopcao}&opcao={opcao}"
+        url = f"{base_url}?ano={ano}&opcao={opcao}&subopcao={subopcao}"
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -110,19 +119,20 @@ def get_processamento():
 
         all_data.append(subopcao_data)
 
-    return all_data
-
+    return {"ano": ano, "data": all_data}
 
 @app.get("/importacao")
-def get_importacao():
-    base_url = "http://vitibrasil.cnpuv.embrapa.br/index.php"
-    subopcoes = [f"subopt_0{i}" for i in range(1, 6)]  # subopt_01 a subopt_04
+def get_importacao(ano: int = Query(2023, description="Ano para filtrar os dados")):
+    
+    base_url = os.getenv("url_base")
+    subopcoes = [f"subopt_0{i}" for i in range(1, 5)]  # subopt_01 a subopt_04
     opcao = "opt_05"
 
     all_data = []
 
     for subopcao in subopcoes:
-        url = f"{base_url}?subopcao={subopcao}&opcao={opcao}"
+        # Construir a URL dinâmica
+        url = f"{base_url}?ano={ano}&opcao={opcao}&subopcao={subopcao}"
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -158,18 +168,20 @@ def get_importacao():
 
         all_data.append(subopcao_data)
 
-    return all_data
+    return {"ano": ano, "data": all_data}
 
 @app.get("/exportacao")
-def get_exportacao():
-    base_url = "http://vitibrasil.cnpuv.embrapa.br/index.php"
+def get_exportacao(ano: int = Query(2023, description="Ano para filtrar os dados")):
+    
+    base_url = os.getenv("url_base")
     subopcoes = [f"subopt_0{i}" for i in range(1, 5)]  # subopt_01 a subopt_04
     opcao = "opt_06"
 
     all_data = []
 
     for subopcao in subopcoes:
-        url = f"{base_url}?subopcao={subopcao}&opcao={opcao}"
+        # Construir a URL dinâmica
+        url = f"{base_url}?ano={ano}&opcao={opcao}&subopcao={subopcao}"
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -205,4 +217,4 @@ def get_exportacao():
 
         all_data.append(subopcao_data)
 
-    return all_data
+    return {"ano": ano, "data": all_data}
