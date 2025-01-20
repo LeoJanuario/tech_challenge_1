@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
+from app.csvReader import jsonProducao
 
 load_dotenv()
 
@@ -21,7 +22,12 @@ def get_producao():
     soup = BeautifulSoup(response.text, "html.parser")
     table = soup.find("table", {"class": "tb_base tb_dados"})
     if not table:
-        return {"error": "Tabela não encontrada"}
+        print("------------->Erro na requisição: Tabela não encontrada")  # Adicionando o print
+        #return {"error": "Tabela não encontrada"}
+        json_data = jsonProducao("Producao.csv")
+        #print("Valor" + str(json_data))
+        #return json_data
+
     
     headers = [header.text.strip() for header in table.find_all("th")]
 
