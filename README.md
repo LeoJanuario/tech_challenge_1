@@ -107,5 +107,12 @@ tech_challenge_api/
 - **Ferramentas:**
   - VS Code
   - Swagger UI para documentação
+ 
+## Publicação no Azure
+
+A aplicação foi publicada como um Web App no Azure e pode ser acessada por meio do seguinte link:
+
+- **URL da API publicada**: [https://apiembrapa.azurewebsites.net/docs](https://apiembrapa.azurewebsites.net/docs)
+
 
 ---
