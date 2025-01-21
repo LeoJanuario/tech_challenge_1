@@ -12,10 +12,10 @@ A API consulta informações específicas das tabelas do site da **Embrapa**, co
 
 ## **Recursos Principais**
 - **Extração de dados do site da Embrapa**: Utiliza `requests` e `BeautifulSoup` para scraping de tabelas HTML específicas.
+- **Fallback para CSV local**: Caso o site esteja fora do ar, os dados são obtidos de arquivos CSV locais.
 - **Endpoints RESTful**: Endpoints organizados para cada tipo de dado.
 - **Documentação Automática**: Swagger UI disponível em `/docs`.
 - **Desenvolvimento Ágil**: Suporte para recarga automática no modo desenvolvimento (`--reload`).
-
 
 ---
 
@@ -29,58 +29,72 @@ Antes de iniciar o projeto, instale as seguintes ferramentas:
 ## **Configuração do Projeto**
 
 1. **Clone o repositório:**
-    ```bash
-    git clone (url Projeto)
-    cd tech-challenge-api
-    ```
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd tech-challenge-api
+```
 
 2. **Crie e ative o ambiente virtual:**
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
-    ```
+```bash
+python -m venv venv
+venv\Scripts\activate  # Para Windows
+# source venv/bin/activate  # Para Linux/Mac
+```
 
 3. **Instale as dependências:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+pip install -r requirements.txt
+```
 
 4. **Execute a aplicação:**
-    ```bash
-    uvicorn app.main:app --reload
-    ```
+```bash
+uvicorn app.main:app --reload
+```
 
-## Acesse no navegador:
+---
 
-- **API Base:** http://127.0.0.1:8000
-- **Documentação Swagger:** http://127.0.0.1:8000/docs
+## **Uso**
+Acesse no navegador os seguintes endpoints:
 
-<!--## Estrutura do Projeto
+- **API Base:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **Documentação Swagger:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+---
+
+## **Estrutura do Projeto**
+
 
 ```bash
 tech_challenge_api/
-├── app/
-│   ├── __init__.py         # Arquivo de inicialização do módulo
-│   ├── main.py             # Arquivo principal com as rotas e lógica da API
-├── venv/                   # Ambiente virtual
-├── README.md               # Documentação do projeto
-├── requirements.txt        # Dependências do projeto
-``` -->
+├── app/                 # Diretório principal da aplicação
+│   ├── __init__.py      # Arquivo de inicialização do módulo
+│   ├── main.py          # Arquivo principal com as rotas e lógica da API
+│   ├── csvReader.py     # Módulo para leitura de arquivos CSV locais
+├── csvs/                # Diretório contendo arquivos CSV locais
+├── venv/                # Ambiente virtual
+├── .env                 # Arquivo de variáveis de ambiente
+├── .gitignore           # Arquivo para ignorar arquivos no Git
+├── diagrama.puml        # Arquivo UML para visualização do projeto
+├── README.md            # Documentação do projeto
+├── requirements.txt     # Dependências do projeto
+```
 
 
-# Endpoints Disponíveis
+---
+
+## **Endpoints Disponíveis**
 
 | **Método** | **Endpoint**         | **Descrição**                                             |
 |------------|----------------------|----------------------------------------------------------|
 | GET        | `/producao`          | Retorna os dados de produção de vitivinicultura.         |
 | GET        | `/processamento`     | Retorna os dados de processamento.                       |
 | GET        | `/comercializacao`   | Retorna os dados de comercialização.                     |
-| GET        | `/Importacao`        | Retorna os dados de importação.                          |
-| GET        | `/Exportacao`        | Retorna os dados de exportação.                          |
+| GET        | `/importacao`        | Retorna os dados de importação.                          |
+| GET        | `/exportacao`        | Retorna os dados de exportação.                          |
 
+---
 
-## Tecnologias Utilizadas
+## **Tecnologias Utilizadas**
 
 - **Linguagem:** Python
 - **Framework:** FastAPI
@@ -88,6 +102,10 @@ tech_challenge_api/
   - `requests` para requisições HTTP
   - `BeautifulSoup` para scraping de HTML
   - `Uvicorn` como servidor ASGI
+  - `dotenv` para gerenciamento de variáveis de ambiente
+  - `pandas` para leitura dos arquivos .csv
 - **Ferramentas:**
   - VS Code
   - Swagger UI para documentação
+
+---
