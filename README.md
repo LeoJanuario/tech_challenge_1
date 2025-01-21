@@ -30,7 +30,7 @@ Antes de iniciar o projeto, instale as seguintes ferramentas:
 
 1. **Clone o repositório:**
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/LeoJanuario/tech_challenge_1
 cd tech-challenge-api
 ```
 
